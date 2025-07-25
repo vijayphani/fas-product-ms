@@ -6,8 +6,7 @@ using Cpa.Fas.ProductMs.Infrastructure.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Data;
-using System.Data.SqlClient;
-
+using Microsoft.Data.SqlClient;
 namespace Cpa.Fas.ProductMs.Infrastructure;
 
 public static class ConfigureServices

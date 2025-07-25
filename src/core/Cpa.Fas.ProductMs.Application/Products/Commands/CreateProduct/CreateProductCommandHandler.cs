@@ -21,6 +21,7 @@ namespace Cpa.Fas.ProductMs.Application.Products.Commands.CreateProduct
             var product = Product.Create(request.Name, request.Price, request.Stock);
 
             await _productRepository.AddAsync(product);
+            _unitOfWork.AddEntityWithEvents(product);
             await _unitOfWork.CommitAsync(cancellationToken); // This will also dispatch domain events
 
             return product.Id.Value;

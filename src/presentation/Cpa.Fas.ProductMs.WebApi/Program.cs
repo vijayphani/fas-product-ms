@@ -3,7 +3,7 @@ using Cpa.Fas.ProductMs.Application;
 using Cpa.Fas.ProductMs.Infrastructure;
 using Cpa.Fas.ProductMs.WebApi.Middleware;
 using Microsoft.AspNetCore.HttpLogging;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;  
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -54,10 +54,7 @@ app.Use(async (context, next) =>
     await next();
 });
 
-
-
 app.MapControllers();
-
 
 // Initialize the database (for demonstration purposes, run once)
 // In a real application, use proper database migration tools.
@@ -82,7 +79,7 @@ async Task InitializeDatabase(IServiceProvider serviceProvider)
     try
     {
         // For SQL Server
-        using SqlConnection connection = new SqlConnection(connectionString);
+        using var connection = new SqlConnection(connectionString);
         // For SQLite
         // using IDbConnection connection = new Microsoft.Data.Sqlite.SqliteConnection(connectionString);
 

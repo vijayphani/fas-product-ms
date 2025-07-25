@@ -14,7 +14,7 @@ builder.Services.AddHttpLogging(logging =>
     logging.ResponseHeaders.Add("MyResponseHeader");
     logging.MediaTypeOptions.AddText("application/javascript");
     logging.RequestBodyLogLimit = 4096;
-    logging.ResponseBodyLogLimit = 4096 * 8;
+    logging.ResponseBodyLogLimit = 4096 ;
     logging.CombineLogs = true;
 });
 
@@ -44,8 +44,6 @@ app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseAuthorization();
 
-app.MapControllers();
-
 app.UseHttpLogging();
 
 app.Use(async (context, next) =>
@@ -55,6 +53,10 @@ app.Use(async (context, next) =>
 
     await next();
 });
+
+
+
+app.MapControllers();
 
 
 // Initialize the database (for demonstration purposes, run once)

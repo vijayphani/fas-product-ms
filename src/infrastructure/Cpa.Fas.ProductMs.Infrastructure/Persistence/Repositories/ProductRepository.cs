@@ -45,7 +45,11 @@ namespace Cpa.Fas.ProductMs.Infrastructure.Persistence.Repositories
                 Id = product.Id.Value,
                 product.Name,
                 product.Price,
-                product.Stock
+                product.Stock,
+                product.CreatedBy,
+                product.CreatedAt,
+                product.UpdatedBy,
+                product.UpdatedAt
             }, _transaction);
         }
 
@@ -57,6 +61,8 @@ namespace Cpa.Fas.ProductMs.Infrastructure.Persistence.Repositories
                 product.Name,
                 product.Price,
                 product.Stock,
+                product.UpdatedBy,
+                product.UpdatedAt,
                 Id = product.Id.Value
             }, _transaction);
         }

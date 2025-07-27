@@ -1,4 +1,5 @@
-﻿using Cpa.Fas.ProductMs.Domain.ValueObjects;
+﻿using Cpa.Fas.ProductMs.Domain.Common;
+using Cpa.Fas.ProductMs.Domain.ValueObjects;
 using MediatR;
 
 namespace Cpa.Fas.ProductMs.Domain.Events

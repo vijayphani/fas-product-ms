@@ -15,9 +15,8 @@ public class ProductTests
         var name = "Test Product";
         var price = 10.50m;
         var stock = 100;
-
-        // Act
-        var product = Product.Create(name, price, stock);
+        Guid userGuid = Guid.NewGuid(); // Simulating a user GUID for the creator   
+        var product = Product.Create(name, price, stock, userGuid);
 
         // Assert
         product.Should().NotBeNull();
@@ -39,8 +38,9 @@ public class ProductTests
     [Fact]
     public void UpdateDetails_ShouldUpdateNameAndPrice()
     {
+        var userGuid = Guid.NewGuid();
         // Arrange
-        var product = Product.Create("Old Name", 5.00m, 50);
+        var product = Product.Create("Old Name", 5.00m, 50, userGuid);
         var newName = "New Name";
         var newPrice = 12.75m;
 
@@ -59,7 +59,8 @@ public class ProductTests
     public void UpdateDetails_ShouldThrowArgumentExceptionForInvalidInput(string name, decimal price, string expectedMessage)
     {
         // Arrange
-        var product = Product.Create("Original", 10.00m, 10);
+        var userGuid = Guid.NewGuid();
+        var product = Product.Create("Original", 10.00m, 10, userGuid);
 
         // Act
         Action act = () => product.UpdateDetails(name, price);
@@ -72,7 +73,8 @@ public class ProductTests
     public void IncreaseStock_ShouldIncreaseStock()
     {
         // Arrange
-        var product = Product.Create("Test Product", 10.00m, 50);
+        var userGuid = Guid.NewGuid();
+        var product = Product.Create("Test Product", 10.00m, 50, userGuid);
         var quantity = 10;
 
         // Act
@@ -86,7 +88,8 @@ public class ProductTests
     public void IncreaseStock_ShouldThrowArgumentExceptionForNonPositiveQuantity()
     {
         // Arrange
-        var product = Product.Create("Test Product", 10.00m, 50);
+        var userGuid = Guid.NewGuid();
+        var product = Product.Create("Test Product", 10.00m, 50, userGuid);
 
         // Act
         Action act = () => product.IncreaseStock(0);
@@ -99,7 +102,8 @@ public class ProductTests
     public void DecreaseStock_ShouldDecreaseStock()
     {
         // Arrange
-        var product = Product.Create("Test Product", 10.00m, 50);
+        var userGuid = Guid.NewGuid();
+        var product = Product.Create("Test Product", 10.00m, 50, userGuid);
         var quantity = 10;
 
         // Act
@@ -113,7 +117,8 @@ public class ProductTests
     public void DecreaseStock_ShouldThrowInvalidOperationExceptionForInsufficientStock()
     {
         // Arrange
-        var product = Product.Create("Test Product", 10.00m, 50);
+        var userGuid = Guid.NewGuid();
+        var product = Product.Create("Test Product", 10.00m, 50, userGuid);
         var quantity = 60;
 
         // Act
@@ -127,7 +132,8 @@ public class ProductTests
     public void DecreaseStock_ShouldThrowArgumentExceptionForNonPositiveQuantity()
     {
         // Arrange
-        var product = Product.Create("Test Product", 10.00m, 50);
+        var userGuid = Guid.NewGuid();
+        var product = Product.Create("Test Product", 10.00m, 50, userGuid);
 
         // Act
         Action act = () => product.DecreaseStock(0);

@@ -20,8 +20,19 @@ namespace Cpa.Fas.ProductMs.WebApi.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> CreateProduct([FromBody] CreateProductCommand command)
+        public async Task<IActionResult> CreateProduct([FromBody] CreateProductRequestViewModel request)
         {
+            // Todo: The userGuid should be retrieved from the authenticated user's claims or context
+            // For now, we will use a placeholder or generate a new Guid.
+            // If empty we should throw an exception or handle it appropriately.
+            Guid userGuid = Guid.Parse(User.FindFirst("userGuid")?.Value ?? Guid.NewGuid().ToString());
+            CreateProductCommand command = new CreateProductCommand(
+                request.Name,
+                request.Price,
+                request.Stock,
+                userGuid
+            );
+
             var productId = await _mediator.Send(command);
             return CreatedAtAction(nameof(GetProductById), new { id = productId }, productId);
         }

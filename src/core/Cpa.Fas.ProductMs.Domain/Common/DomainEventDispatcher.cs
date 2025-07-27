@@ -1,9 +1,8 @@
-﻿using Cpa.Fas.ProductMs.Application.Common.Interfaces;
-using Cpa.Fas.ProductMs.Domain.Common;
+﻿using Cpa.Fas.ProductMs.Domain.Common.Intefaces;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace Cpa.Fas.ProductMs.Infrastructure.Services
+namespace Cpa.Fas.ProductMs.Domain.Common
 {
     public class DomainEventDispatcher : IDomainEventDispatcher
     {

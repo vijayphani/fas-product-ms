@@ -1,21 +1,19 @@
-﻿using Cpa.Fas.ProductMs.Domain.Events;
+﻿using Cpa.Fas.ProductMs.Domain.Common.Intefaces;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Cpa.Fas.ProductMs.Domain.Common
 {
-    public abstract class BaseEntity
+    public abstract class BaseEntity : IEntity 
     {
         private readonly List<BaseDomainEvent> _domainEvents = new();
 
+        [NotMapped]
         public IReadOnlyCollection<BaseDomainEvent> DomainEvents => _domainEvents.AsReadOnly();
 
-        protected void AddDomainEvent(BaseDomainEvent domainEvent)
-        {
-            _domainEvents.Add(domainEvent);
-        }
+        public Guid Id { get; set; }
 
-        public void ClearDomainEvents()
-        {
-            _domainEvents.Clear();
-        }
+        protected void AddDomainEvent(BaseDomainEvent domainEvent) => _domainEvents.Add(domainEvent);
+        public void RemoveDomainEvent(BaseDomainEvent domainEvent) => _domainEvents.Remove(domainEvent);
+        public void ClearDomainEvents() => _domainEvents.Clear();
     }
 }

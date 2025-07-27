@@ -1,8 +1,9 @@
 ﻿using Cpa.Fas.ProductMs.Application.Common.Interfaces;
+using Cpa.Fas.ProductMs.Domain.Common;
+using Cpa.Fas.ProductMs.Domain.Common.Intefaces;
 using Cpa.Fas.ProductMs.Domain.Entities;
 using Cpa.Fas.ProductMs.Domain.Events;
 using Cpa.Fas.ProductMs.Infrastructure.Persistence;
-using Cpa.Fas.ProductMs.Infrastructure.Services;
 using Dapper;
 using FluentAssertions;
 using MediatR;
@@ -41,7 +42,8 @@ namespace Cpa.Fas.ProductMs.Infrastructure.Tests.Persistence
         public async Task CommitAsync_ShouldCommitTransactionAndDispatchEvents()
         {
             // Arrange
-            var product = Product.Create("Test Product", 10.00m, 10); // This creates a ProductCreatedDomainEvent
+            var userGuid = Guid.NewGuid();
+            var product = Product.Create("Test Product", 10.00m, 10, userGuid); // This creates a ProductCreatedDomainEvent
             _unitOfWork.AddEntityWithEvents(product); // Manually add entity to UoW for event tracking
 
             // Act
@@ -63,7 +65,8 @@ namespace Cpa.Fas.ProductMs.Infrastructure.Tests.Persistence
         public async Task CommitAsync_ShouldRollbackTransaction_WhenExceptionOccurs()
         {
             // Arrange
-            var product = Product.Create("Test Product", 10.00m, 10);
+            var userGuid = Guid.NewGuid();
+            var product = Product.Create("Test Product", 10.00m, 10, userGuid);
             _unitOfWork.AddEntityWithEvents(product);
 
             // Simulate an error during commit (e.g., a database constraint violation)

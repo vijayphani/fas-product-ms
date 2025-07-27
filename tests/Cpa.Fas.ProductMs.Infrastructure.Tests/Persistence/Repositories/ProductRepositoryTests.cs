@@ -38,8 +38,9 @@ public class ProductRepositoryTests : IDisposable
     [Fact]
     public async Task AddAsync_ShouldAddProductToDatabase()
     {
+        var userGuid = Guid.NewGuid();
         // Arrange
-        var product = Product.Create("Test Product", 15.99m, 200);
+        var product = Product.Create("Test Product", 15.99m, 200, userGuid);
 
         // Act
         await _productRepository.AddAsync(product);
@@ -89,7 +90,8 @@ public class ProductRepositoryTests : IDisposable
     public async Task UpdateAsync_ShouldUpdateProductInDatabase()
     {
         // Arrange
-        var product = Product.Create("Original Product", 20.00m, 100);
+        var userGuid = Guid.NewGuid();
+        var product = Product.Create("Original Product", 20.00m, 100, userGuid);
         await _productRepository.AddAsync(product);
 
         product.UpdateDetails("Updated Product", 25.50m);
@@ -110,7 +112,8 @@ public class ProductRepositoryTests : IDisposable
     public async Task DeleteAsync_ShouldRemoveProductFromDatabase()
     {
         // Arrange
-        var product = Product.Create("Product To Delete", 5.00m, 10);
+        var userGuid = Guid.NewGuid();
+        var product = Product.Create("Product To Delete", 5.00m, 10, userGuid);
         await _productRepository.AddAsync(product);
 
         // Act

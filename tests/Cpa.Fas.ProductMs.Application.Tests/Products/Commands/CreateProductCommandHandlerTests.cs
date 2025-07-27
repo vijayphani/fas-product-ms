@@ -25,7 +25,8 @@ namespace Cpa.Fas.ProductMs.Application.Tests.Products.Commands
         public async Task Handle_ShouldAddProductAndCommitUnitOfWork()
         {
             // Arrange
-            var command = new CreateProductCommand("Test Product", 10.99m, 50);
+            var userGuid = Guid.NewGuid();
+            var command = new CreateProductCommand("Test Product", 10.99m, 50, userGuid);
 
             _mockUnitOfWork.Setup(u => u.CommitAsync(It.IsAny<CancellationToken>()))
                 .ReturnsAsync(1); // Simulate successful commit

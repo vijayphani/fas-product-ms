@@ -16,12 +16,20 @@ INSERT INTO Products (
     Id, 
     Name, 
     Price, 
-    Stock
+    Stock,
+    CreatedBy,
+    CreatedAt,
+    UpdatedBy,
+    UpdatedAt
 ) VALUES (
     @Id, 
     @Name, 
     @Price, 
-    @Stock
+    @Stock,
+    @CreatedBy,
+    @CreatedAt, 
+    @UpdatedBy, 
+    @UpdatedAt
 )
 ";
         #endregion
@@ -32,7 +40,9 @@ UPDATE Products
 SET 
     Name = @Name, 
     Price = @Price, 
-    Stock = @Stock 
+    Stock = @Stock, 
+    UpdatedBy = @UpdatedBy,
+    UpdatedAt = @UpdatedAt
 WHERE 
     Id = @Id
 ";

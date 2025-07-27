@@ -16,9 +16,9 @@ namespace Cpa.Fas.ProductMs.Application.Products.Commands.CreateProduct
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Guid> Handle(CreateProductCommand request, CancellationToken cancellationToken)
+        public async Task<Guid> Handle(CreateProductCommand request,  CancellationToken cancellationToken)
         {
-            var product = Product.Create(request.Name, request.Price, request.Stock);
+            var product = Product.Create(request.Name, request.Price, request.Stock, request.userGuid);
 
             await _productRepository.AddAsync(product);
             _unitOfWork.AddEntityWithEvents(product);

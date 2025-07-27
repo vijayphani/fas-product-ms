@@ -1,5 +1,6 @@
 ﻿using Cpa.Fas.ProductMs.Application.Common.Exceptions;
-using System.Net;
+using Cpa.Fas.ProductMs.Domain.Exceptions.Base;
+using Microsoft.Data.SqlClient;
 using System.Text.Json;
 
 namespace Cpa.Fas.ProductMs.WebApi.Middleware
@@ -8,12 +9,9 @@ namespace Cpa.Fas.ProductMs.WebApi.Middleware
     {
         private readonly RequestDelegate _next;
         private readonly ILogger<ExceptionHandlingMiddleware> _logger;
+        private record ApiError(string PropertyName, string ErrorMessage);
 
-        public ExceptionHandlingMiddleware(RequestDelegate next, ILogger<ExceptionHandlingMiddleware> logger)
-        {
-            _next = next;
-            _logger = logger;
-        }
+        public ExceptionHandlingMiddleware(RequestDelegate next, ILogger<ExceptionHandlingMiddleware> logger) => (_logger, _next) = (logger, next);
 
         public async Task InvokeAsync(HttpContext httpContext)
         {
@@ -31,35 +29,51 @@ namespace Cpa.Fas.ProductMs.WebApi.Middleware
         private static async Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
             context.Response.ContentType = "application/json";
-            var statusCode = HttpStatusCode.InternalServerError;
+            context.Response.StatusCode = exception switch
+            {
+                BadRequestException or ValidationException => StatusCodes.Status400BadRequest,
+                NotFoundException => StatusCodes.Status404NotFound,
+                _ => StatusCodes.Status500InternalServerError
+            };
             var message = "An unexpected error occurred.";
             var errors = new Dictionary<string, string[]>();
 
             switch (exception)
             {
                 case ValidationException validationException:
-                    statusCode = HttpStatusCode.BadRequest;
                     message = "One or more validation errors occurred.";
                     errors = validationException.Errors.ToDictionary(
                         kvp => kvp.Key,
                         kvp => kvp.Value
                     );
                     break;
+                case SqlException sqlException:
+                    // Do we really want to expose SQL errors to the client?
+                    // This is generally not recommended for production environments
+                    message = "One or more database errors occurred.";
+                    var sqlErrorDictionary = new Dictionary<string, string[]>();
+                    var errorList = new List<string>();
+
+                    for (int i = 0; i < sqlException.Errors.Count; i++)
+                    {
+                        errorList.Add(sqlException.Errors[i].ToString());
+                    }
+                    sqlErrorDictionary.Add("SqlErrors", errorList.ToArray());
+                    errors = sqlErrorDictionary;
+                    break;
                 case ArgumentException:
                 case InvalidOperationException:
-                    statusCode = HttpStatusCode.BadRequest;
                     message = exception.Message;
                     break;
+
                 // Add more specific exception handling here if needed
                 default:
                     break;
             }
 
-            context.Response.StatusCode = (int)statusCode;
-
             var response = new
             {
-                StatusCode = (int)statusCode,
+                StatusCode = context.Response.StatusCode,
                 Message = message,
                 Errors = errors.Any() ? errors : null
             };
@@ -67,5 +81,4 @@ namespace Cpa.Fas.ProductMs.WebApi.Middleware
             await context.Response.WriteAsync(JsonSerializer.Serialize(response));
         }
     }
-
 }

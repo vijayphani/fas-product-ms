@@ -4,7 +4,6 @@ using Cpa.Fas.ProductMs.Domain.Entities;
 using Cpa.Fas.ProductMs.Domain.Repositories;
 using FluentAssertions;
 using Moq;
-using Xunit;
 
 namespace Cpa.Fas.ProductMs.Application.Tests.Products.Commands
 {

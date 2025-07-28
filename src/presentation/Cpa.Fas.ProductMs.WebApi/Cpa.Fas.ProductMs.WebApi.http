@@ -1,6 +1,4 @@
 @Cpa.Fas.ProductMs.WebApi_HostAddress = http://localhost:5172
 
-GET {{Cpa.Fas.ProductMs.WebApi_HostAddress}}/weatherforecast/
-Accept: application/json
 
 ###

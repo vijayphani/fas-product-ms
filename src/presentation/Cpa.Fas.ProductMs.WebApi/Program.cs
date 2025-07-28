@@ -3,7 +3,7 @@ using Cpa.Fas.ProductMs.Application;
 using Cpa.Fas.ProductMs.Infrastructure;
 using Cpa.Fas.ProductMs.WebApi.Middleware;
 using Microsoft.AspNetCore.HttpLogging;
-using Microsoft.Data.SqlClient;  
+using Microsoft.Data.SqlClient;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +14,7 @@ builder.Services.AddHttpLogging(logging =>
     logging.ResponseHeaders.Add("MyResponseHeader");
     logging.MediaTypeOptions.AddText("application/javascript");
     logging.RequestBodyLogLimit = 4096;
-    logging.ResponseBodyLogLimit = 4096 ;
+    logging.ResponseBodyLogLimit = 4096;
     logging.CombineLogs = true;
 });
 

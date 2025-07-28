@@ -1,5 +1,4 @@
-﻿using Cpa.Fas.ProductMs.Application.Common.Interfaces;
-using Cpa.Fas.ProductMs.Domain.Common;
+﻿using Cpa.Fas.ProductMs.Domain.Common;
 using Cpa.Fas.ProductMs.Domain.Common.Intefaces;
 using Cpa.Fas.ProductMs.Domain.Entities;
 using Cpa.Fas.ProductMs.Domain.Events;

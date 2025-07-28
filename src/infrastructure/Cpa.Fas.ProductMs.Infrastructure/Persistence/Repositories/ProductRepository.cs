@@ -1,5 +1,4 @@
-﻿using Cpa.Fas.ProductMs.Application.Products.Queries.GetProductById;
-using Cpa.Fas.ProductMs.Domain.Entities;
+﻿using Cpa.Fas.ProductMs.Domain.Entities;
 using Cpa.Fas.ProductMs.Domain.Repositories;
 using Cpa.Fas.ProductMs.Domain.ValueObjects;
 using Cpa.Fas.ProductMs.Infrastructure.Persistence.DapperModels;
@@ -25,7 +24,7 @@ namespace Cpa.Fas.ProductMs.Infrastructure.Persistence.Repositories
 
         public async Task<Product?> GetByIdAsync(ProductId id)
         {
-            var sql = ProductQuery.GetProductById; 
+            var sql = ProductQuery.GetProductById;
             var productModel = await _connection.QuerySingleOrDefaultAsync<ProductModel>(sql, new { Id = id.Value }, _transaction);
 
             if (productModel == null)
@@ -39,7 +38,7 @@ namespace Cpa.Fas.ProductMs.Infrastructure.Persistence.Repositories
 
         public async Task AddAsync(Product product)
         {
-            var sql = ProductCommand.AddProduct;  
+            var sql = ProductCommand.AddProduct;
             await _connection.ExecuteAsync(sql, new
             {
                 Id = product.Id.Value,

@@ -39,6 +39,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+// Use custom correlationIdMiddleware
+app.UseMiddleware<CorrelationIdMiddleware>();
 // Use custom exception handling middleware
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 

@@ -1,13 +1,13 @@
 ﻿using Cpa.Fas.ProductMs.Application.Common.Interfaces;
+using Cpa.Fas.ProductMs.Domain.Common;
+using Cpa.Fas.ProductMs.Domain.Common.Intefaces;
 using Cpa.Fas.ProductMs.Domain.Repositories;
 using Cpa.Fas.ProductMs.Infrastructure.Persistence;
 using Cpa.Fas.ProductMs.Infrastructure.Persistence.Repositories;
+using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Data;
-using Microsoft.Data.SqlClient;
-using Cpa.Fas.ProductMs.Domain.Common.Intefaces;
-using Cpa.Fas.ProductMs.Domain.Common;
 namespace Cpa.Fas.ProductMs.Infrastructure;
 
 public static class ConfigureServices

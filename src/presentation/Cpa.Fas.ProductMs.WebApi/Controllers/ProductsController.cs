@@ -55,14 +55,14 @@ namespace Cpa.Fas.ProductMs.WebApi.Controllers
             {
                 apiResponse.Success = false;
                 apiResponse.Message = $"Product with Id {id} is not found";
-                return NotFound(apiResponse); 
+                return NotFound(apiResponse);
             }
 
             apiResponse.Success = true;
             apiResponse.Message = $"Product with Id {id} is found";
             apiResponse.Result = product;
 
-            return Ok(apiResponse); 
+            return Ok(apiResponse);
         }
     }
 }

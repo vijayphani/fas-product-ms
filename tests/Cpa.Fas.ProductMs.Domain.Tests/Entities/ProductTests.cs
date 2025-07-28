@@ -1,7 +1,6 @@
 ﻿using Cpa.Fas.ProductMs.Domain.Entities;
 using Cpa.Fas.ProductMs.Domain.Events;
 using Cpa.Fas.ProductMs.Domain.ValueObjects;
-using Xunit;
 using FluentAssertions;
 
 namespace Cpa.Fas.ProductMs.Domain.Tests.Entities;

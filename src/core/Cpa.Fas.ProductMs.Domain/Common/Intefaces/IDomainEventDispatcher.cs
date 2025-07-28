@@ -1,6 +1,4 @@
-﻿using Cpa.Fas.ProductMs.Domain.Common;
-
-namespace Cpa.Fas.ProductMs.Domain.Common.Intefaces;
+﻿namespace Cpa.Fas.ProductMs.Domain.Common.Intefaces;
 
 public interface IDomainEventDispatcher
 {

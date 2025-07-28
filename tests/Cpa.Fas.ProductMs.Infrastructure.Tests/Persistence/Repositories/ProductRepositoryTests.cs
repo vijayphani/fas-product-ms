@@ -28,8 +28,14 @@ public class ProductRepositoryTests : IDisposable
                 Id TEXT PRIMARY KEY,
                 Name TEXT NOT NULL,
                 Price REAL NOT NULL,
-                Stock INTEGER NOT NULL
-            );";
+                Stock INTEGER NOT NULL,
+                [IsDeleted] [int] Default 0,
+	            [CreatedBy] TEXT NOT NULL,
+	            [CreatedAt] [datetime] NOT NULL,
+	            [UpdatedBy] TEXT NOT NULL,
+	            [UpdatedAt] [datetime] NOT NULL
+            ); 
+";
         _connection.Execute(createTableSql, transaction: _transaction);
 
         _productRepository = new ProductRepository(_connection, _transaction);
@@ -139,6 +145,6 @@ internal static class DapperSqliteExtensions
 {
     public static int Execute(this IDbConnection cnn, string sql, object? param = null, IDbTransaction? transaction = null, int? commandTimeout = null, CommandType? commandType = null)
     {
-        return cnn.Execute(sql, param, transaction, commandTimeout, commandType);
+        return Dapper.SqlMapper.Execute(cnn, sql, param, transaction, commandTimeout, commandType);
     }
 }

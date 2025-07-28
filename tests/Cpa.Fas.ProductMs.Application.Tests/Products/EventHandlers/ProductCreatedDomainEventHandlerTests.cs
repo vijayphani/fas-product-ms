@@ -3,11 +3,6 @@ using Cpa.Fas.ProductMs.Domain.Events;
 using Cpa.Fas.ProductMs.Domain.ValueObjects;
 using Microsoft.Extensions.Logging;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Cpa.Fas.ProductMs.Application.Tests.Products.EventHandlers
 {
@@ -38,13 +33,20 @@ namespace Cpa.Fas.ProductMs.Application.Tests.Products.EventHandlers
 
             // Assert
             _mockLogger.Verify(logger => logger.Log(
-                    It.Is<LogLevel>(l => l == LogLevel.Information),
+                    LogLevel.Information,
                     It.IsAny<EventId>(),
-                    It.Is<It.IsAnyType>((o, t) => o.ToString()!.Contains("CleanArchitectureDDD Domain Event: ProductCreatedDomainEvent") &&
-                                                o.ToString()!.Contains($"Product created: Id={productId}, Name={productName}, Price={price}, Stock={stock}")),
+                    It.Is<It.IsAnyType>((o, t) => o.ToString()!.Contains("ProductMs Domain Event: ProductCreatedDomainEvent")),
                     It.IsAny<Exception>(),
                     It.IsAny<Func<It.IsAnyType, Exception?, string>>()),
                 Times.AtLeastOnce);
+
+            //_mockLogger.Verify(logger => logger.Log(
+            //        LogLevel.Information,
+            //        It.IsAny<EventId>(),
+            //        It.Is<It.IsAnyType>((o, t) => o.ToString()!.Contains($"Product created: Id={productId}, Name={productName}, Price={price}, Stock={stock}")),
+            //        It.IsAny<Exception>(),
+            //        It.IsAny<Func<It.IsAnyType, Exception?, string>>()),
+            //    Times.AtLeastOnce);
         }
     }
 

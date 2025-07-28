@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Cpa.Fas.ProductMs.Domain.Common
 {
-    public abstract class BaseEntity : IEntity 
+    public abstract class BaseEntity : IEntity
     {
         private readonly List<BaseDomainEvent> _domainEvents = new();
 

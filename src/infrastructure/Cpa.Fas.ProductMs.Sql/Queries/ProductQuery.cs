@@ -11,7 +11,8 @@ SELECT
     Id, 
     Name, 
     Price, 
-    Stock 
+    Stock,
+    IsDeleted
 FROM 
     Products 
 WHERE 
@@ -25,7 +26,8 @@ SELECT
     Id, 
     Name, 
     Price, 
-    Stock 
+    Stock,
+    IsDeleted
 FROM 
     Products 
 WHERE 

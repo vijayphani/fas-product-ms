@@ -33,7 +33,7 @@ namespace Cpa.Fas.ProductMs.Infrastructure.Persistence.Repositories
             }
 
             // Reconstruct domain entity from Dapper model
-            return new Product(ProductId.FromGuid(productModel.Id), productModel.Name, productModel.Price, productModel.Stock);
+            return new Product(ProductId.FromGuid(productModel.Id), productModel.Name, productModel.Price, productModel.Stock, productModel.IsDeleted);
         }
 
         public async Task AddAsync(Product product)

@@ -2,9 +2,8 @@
 using Cpa.Fas.ProductMs.Domain.ValueObjects;
 using Cpa.Fas.ProductMs.Infrastructure.Persistence.Repositories;
 using FluentAssertions;
-using Microsoft.Data.Sqlite;
 using System.Data;
-
+using System.Data.SQLite;
 namespace Cpa.Fas.ProductMs.Infrastructure.Tests.Persistence.Repositories;
 
 public class ProductRepositoryTests : IDisposable
@@ -15,8 +14,8 @@ public class ProductRepositoryTests : IDisposable
 
     public ProductRepositoryTests()
     {
-        // Use an in-memory SQLite database for testing
-        _connection = new SqliteConnection("DataSource=:memory:");
+       
+        _connection = new SQLiteConnection("Data Source=:memory:;Version=3;New=True;");
         _connection.Open();
 
         // Begin a transaction for each test to ensure isolation and rollback
@@ -24,18 +23,18 @@ public class ProductRepositoryTests : IDisposable
 
         // Create the table schema
         var createTableSql = @"
-            CREATE TABLE Products (
-                Id TEXT PRIMARY KEY,
-                Name TEXT NOT NULL,
-                Price REAL NOT NULL,
-                Stock INTEGER NOT NULL,
-                [IsDeleted] [int] Default 0,
-	            [CreatedBy] TEXT NOT NULL,
-	            [CreatedAt] [datetime] NOT NULL,
-	            [UpdatedBy] TEXT NOT NULL,
-	            [UpdatedAt] [datetime] NOT NULL
-            ); 
-";
+CREATE TABLE [Products](
+	[Id] [uniqueidentifier] NOT NULL,
+	[Name] [nvarchar](100) NOT NULL,
+	[Price] [decimal](18, 2) NOT NULL,
+	[Stock] [int] NOT NULL,
+	[IsDeleted] [bit] NULL,
+	[CreatedBy] [uniqueidentifier] NOT NULL,
+	[CreatedAt] [datetime] NOT NULL,
+	[UpdatedBy] [uniqueidentifier] NOT NULL,
+	[UpdatedAt] [datetime] NOT NULL
+);";
+
         _connection.Execute(createTableSql, transaction: _transaction);
 
         _productRepository = new ProductRepository(_connection, _transaction);
@@ -50,6 +49,7 @@ public class ProductRepositoryTests : IDisposable
 
         // Act
         await _productRepository.AddAsync(product);
+
 
         // Assert
         var retrievedProduct = await _productRepository.GetByIdAsync(product.Id);

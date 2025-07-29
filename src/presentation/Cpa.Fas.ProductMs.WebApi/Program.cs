@@ -116,3 +116,9 @@ async Task InitializeDatabase(IServiceProvider serviceProvider)
         Console.WriteLine($"Error initializing database: {ex.Message}");
     }
 }
+
+
+namespace Cpa.Fas.ProductMs.WebApi
+{
+    public partial class Program;
+}

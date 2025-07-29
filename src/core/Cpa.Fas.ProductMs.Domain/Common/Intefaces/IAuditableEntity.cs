@@ -8,7 +8,7 @@
         DateTime UpdatedAt { get; set; }
 
         void MarkAsCreated(Guid userId);
-        void MarkAsUpdated(Guid userId);
 
+        void MarkAsUpdated(Guid userId);
     }
 }

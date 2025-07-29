@@ -26,5 +26,4 @@ namespace Cpa.Fas.ProductMs.Application.Products.Queries.GetProductById
             return new ProductDto(product.Id.Value, product.Name, product.Price, product.Stock);
         }
     }
-
 }

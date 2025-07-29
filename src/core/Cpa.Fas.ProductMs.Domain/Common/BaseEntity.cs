@@ -13,7 +13,9 @@ namespace Cpa.Fas.ProductMs.Domain.Common
         public Guid Id { get; set; }
 
         protected void AddDomainEvent(BaseDomainEvent domainEvent) => _domainEvents.Add(domainEvent);
+
         public void RemoveDomainEvent(BaseDomainEvent domainEvent) => _domainEvents.Remove(domainEvent);
+
         public void ClearDomainEvents() => _domainEvents.Clear();
     }
 }

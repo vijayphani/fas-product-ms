@@ -1,6 +1,5 @@
 ﻿namespace Cpa.Fas.ProductMs.Infrastructure.Persistence.DapperModels
 {
-
     // This model is used by Dapper to map database rows to C# objects.
     // It's a simple representation of the table schema.
     public class ProductModel
@@ -11,5 +10,4 @@
         public int Stock { get; set; }
         public bool IsDeleted { get; set; } = false; // Default to false, indicating the product is not deleted
     }
-
 }

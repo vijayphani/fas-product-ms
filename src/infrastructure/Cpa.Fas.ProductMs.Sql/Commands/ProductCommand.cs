@@ -6,54 +6,59 @@ namespace Cpa.Fas.ProductMs.Sql.Commands
     public static class ProductCommand
     {
         #region insert
+
         public const string AddProduct = @"
 INSERT INTO Products (
-    Id, 
-    Name, 
-    Price, 
+    Id,
+    Name,
+    Price,
     Stock,
     CreatedBy,
     CreatedAt,
     UpdatedBy,
     UpdatedAt
 ) VALUES (
-    @Id, 
-    @Name, 
-    @Price, 
+    @Id,
+    @Name,
+    @Price,
     @Stock,
     @CreatedBy,
-    @CreatedAt, 
-    @UpdatedBy, 
+    @CreatedAt,
+    @UpdatedBy,
     @UpdatedAt
 )
 ";
-        #endregion
+
+        #endregion insert
 
         #region Update
+
         public const string UpdateProduct = @"
-UPDATE Products 
-SET 
-    Name = @Name, 
-    Price = @Price, 
-    Stock = @Stock, 
+UPDATE Products
+SET
+    Name = @Name,
+    Price = @Price,
+    Stock = @Stock,
     UpdatedBy = @UpdatedBy,
     UpdatedAt = @UpdatedAt
-WHERE 
+WHERE
     Id = @Id
 ";
-        #endregion
 
-        #region Delete  
+        #endregion Update
+
+        #region Delete
+
         // We do only soft delete in this case, setting IsDeleted to 1
 
         public const string DeleteProduct = @"
-UPDATE Products 
-SET 
-    IsDeleted = 1 
-WHERE 
+UPDATE Products
+SET
+    IsDeleted = 1
+WHERE
     Id = @Id
 ";
-        #endregion
 
+        #endregion Delete
     }
 }

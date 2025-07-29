@@ -8,7 +8,8 @@ namespace Cpa.Fas.ProductMs.Domain.Entities
     {
         // Private constructor for EF Core or Dapper deserialization
         // and to enforce creation through a factory method or static method.
-        private Product() { }
+        private Product()
+        { }
 
         // Public constructor for creating new instances within the domain.
         // This can be simplified or made private if a static factory method is preferred.
@@ -33,7 +34,7 @@ namespace Cpa.Fas.ProductMs.Domain.Entities
         public string Name { get; private set; } = string.Empty;
         public decimal Price { get; private set; }
         public int Stock { get; private set; }
-        public bool IsDeleted { get; private set; }  
+        public bool IsDeleted { get; private set; }
 
         // Static factory method to create a new Product and raise a domain event.
         public static Product Create(string name, decimal price, int stock, Guid userGuid)

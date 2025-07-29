@@ -20,5 +20,4 @@ namespace Cpa.Fas.ProductMs.Application.Common.Exceptions
 
         public IDictionary<string, string[]> Errors { get; }
     }
-
 }

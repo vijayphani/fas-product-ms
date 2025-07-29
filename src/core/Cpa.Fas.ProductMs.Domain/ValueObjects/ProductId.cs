@@ -16,7 +16,9 @@ namespace Cpa.Fas.ProductMs.Domain.ValueObjects
         }
 
         public static ProductId New() => new(Guid.NewGuid());
+
         public static ProductId FromGuid(Guid value) => new(value);
+
         public static ProductId FromString(string value) => new(Guid.Parse(value));
 
         protected override IEnumerable<object> GetEqualityComponents()
@@ -41,5 +43,4 @@ namespace Cpa.Fas.ProductMs.Domain.ValueObjects
         // Implicit conversion from ProductId to string
         public static implicit operator string(ProductId productId) => productId.Value.ToString();
     }
-
 }

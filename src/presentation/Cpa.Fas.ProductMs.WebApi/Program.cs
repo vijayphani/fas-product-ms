@@ -1,4 +1,3 @@
-
 using Cpa.Fas.ProductMs.Application;
 using Cpa.Fas.ProductMs.Infrastructure;
 using Cpa.Fas.ProductMs.WebApi.Middleware;
@@ -64,7 +63,6 @@ app.MapControllers();
 
 app.Run();
 
-
 // Helper method to initialize the database schema
 async Task InitializeDatabase(IServiceProvider serviceProvider)
 {
@@ -116,7 +114,6 @@ async Task InitializeDatabase(IServiceProvider serviceProvider)
         Console.WriteLine($"Error initializing database: {ex.Message}");
     }
 }
-
 
 namespace Cpa.Fas.ProductMs.WebApi
 {

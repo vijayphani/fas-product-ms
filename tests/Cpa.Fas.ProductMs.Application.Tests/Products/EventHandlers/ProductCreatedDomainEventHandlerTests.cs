@@ -49,5 +49,4 @@ namespace Cpa.Fas.ProductMs.Application.Tests.Products.EventHandlers
             //    Times.AtLeastOnce);
         }
     }
-
 }

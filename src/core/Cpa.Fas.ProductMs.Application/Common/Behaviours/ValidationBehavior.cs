@@ -2,7 +2,6 @@
 using MediatR;
 using ValidationException = Cpa.Fas.ProductMs.Application.Common.Exceptions.ValidationException;
 
-
 namespace Cpa.Fas.ProductMs.Application.Common.Behaviours
 {
     public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>

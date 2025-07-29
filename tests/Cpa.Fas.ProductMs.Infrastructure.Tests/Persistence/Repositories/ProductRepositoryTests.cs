@@ -4,6 +4,7 @@ using Cpa.Fas.ProductMs.Infrastructure.Persistence.Repositories;
 using FluentAssertions;
 using System.Data;
 using System.Data.SQLite;
+
 namespace Cpa.Fas.ProductMs.Infrastructure.Tests.Persistence.Repositories;
 
 public class ProductRepositoryTests : IDisposable
@@ -14,7 +15,6 @@ public class ProductRepositoryTests : IDisposable
 
     public ProductRepositoryTests()
     {
-       
         _connection = new SQLiteConnection("Data Source=:memory:;Version=3;New=True;");
         _connection.Open();
 
@@ -49,7 +49,6 @@ CREATE TABLE [Products](
 
         // Act
         await _productRepository.AddAsync(product);
-
 
         // Assert
         var retrievedProduct = await _productRepository.GetByIdAsync(product.Id);
@@ -128,8 +127,7 @@ CREATE TABLE [Products](
         // Assert
         var deletedProduct = await _productRepository.GetByIdAsync(product.Id);
         deletedProduct.Should().NotBeNull();
-        deletedProduct.IsDeleted.Should().Be(true); 
-
+        deletedProduct.IsDeleted.Should().Be(true);
     }
 
     public void Dispose()

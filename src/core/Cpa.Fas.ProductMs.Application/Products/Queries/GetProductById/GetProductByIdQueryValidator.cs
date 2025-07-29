@@ -10,5 +10,4 @@ namespace Cpa.Fas.ProductMs.Application.Products.Queries.GetProductById
                 .NotEmpty().WithMessage("Product ID is required.");
         }
     }
-
 }

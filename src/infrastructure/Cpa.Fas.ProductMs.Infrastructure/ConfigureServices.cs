@@ -8,6 +8,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Data;
+
 namespace Cpa.Fas.ProductMs.Infrastructure;
 
 public static class ConfigureServices

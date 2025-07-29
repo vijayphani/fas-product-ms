@@ -6,35 +6,37 @@ namespace Cpa.Fas.ProductMs.Sql.Queries
     public static class ProductQuery
     {
         #region GetProductById
+
         public const string GetProductById = @"
-SELECT 
-    Id, 
-    Name, 
-    Price, 
+SELECT
+    Id,
+    Name,
+    Price,
     Stock,
     IsDeleted
-FROM 
-    Products 
-WHERE 
+FROM
+    Products
+WHERE
     Id = @Id
  ";
-        #endregion
+
+        #endregion GetProductById
 
         #region GetProductByName
+
         public const string GetProductByName = @"
-SELECT 
-    Id, 
-    Name, 
-    Price, 
+SELECT
+    Id,
+    Name,
+    Price,
     Stock,
     IsDeleted
-FROM 
-    Products 
-WHERE 
+FROM
+    Products
+WHERE
     Name = @Name
 ";
-        #endregion
 
-
+        #endregion GetProductByName
     }
 }

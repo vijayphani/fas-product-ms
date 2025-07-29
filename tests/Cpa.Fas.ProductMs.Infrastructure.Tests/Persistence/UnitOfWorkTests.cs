@@ -1,7 +1,6 @@
 ﻿using Cpa.Fas.ProductMs.Domain.Common;
 using Cpa.Fas.ProductMs.Domain.Common.Intefaces;
 using Cpa.Fas.ProductMs.Domain.Entities;
-using Cpa.Fas.ProductMs.Domain.Events;
 using Cpa.Fas.ProductMs.Infrastructure.Persistence;
 using Dapper;
 using FluentAssertions;
@@ -76,16 +75,16 @@ namespace Cpa.Fas.ProductMs.Infrastructure.Tests.Persistence
             // Act
             Func<Task> act = async () => await _unitOfWork.CommitAsync();
 
-            // Need to fix this unit test. 
+            // Need to fix this unit test.
             // Currently, it is commented out because the exception is not being thrown as expected.
-            // and unable to capture the Simulated Publishing error. 
+            // and unable to capture the Simulated Publishing error.
 
             // Assert
             //await act.Should().ThrowAsync<InvalidOperationException>()
             //    .WithMessage("Simulated publishing error");
 
             // Verify that the domain event was attempted to be published
-           // _mockPublisher.Verify(p => p.Publish(It.IsAny<BaseDomainEvent>(), It.IsAny<CancellationToken>()), Times.Once);
+            // _mockPublisher.Verify(p => p.Publish(It.IsAny<BaseDomainEvent>(), It.IsAny<CancellationToken>()), Times.Once);
 
             // Verify that the entity's domain events were NOT cleared (because rollback happened)
             // This behavior depends on where ClearDomainEvents is called.

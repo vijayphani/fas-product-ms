@@ -26,4 +26,3 @@ namespace Cpa.Fas.ProductMs.Application.Products.EventHandlers
         }
     }
 }
-

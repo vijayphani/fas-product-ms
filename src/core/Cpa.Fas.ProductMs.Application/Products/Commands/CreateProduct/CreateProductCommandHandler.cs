@@ -27,5 +27,4 @@ namespace Cpa.Fas.ProductMs.Application.Products.Commands.CreateProduct
             return product.Id.Value;
         }
     }
-
 }

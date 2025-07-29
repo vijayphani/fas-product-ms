@@ -17,5 +17,4 @@ namespace Cpa.Fas.ProductMs.Application.Products.Commands.CreateProduct
                 .GreaterThanOrEqualTo(0).WithMessage("Stock cannot be negative.");
         }
     }
-
 }

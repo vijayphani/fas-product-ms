@@ -47,6 +47,7 @@ namespace Cpa.Fas.ProductMs.WebApi.Middleware
                         kvp => kvp.Value
                     );
                     break;
+
                 case SqlException sqlException:
                     // Do we really want to expose SQL errors to the client?
                     // This is generally not recommended for production environments
@@ -61,6 +62,7 @@ namespace Cpa.Fas.ProductMs.WebApi.Middleware
                     sqlErrorDictionary.Add("SqlErrors", errorList.ToArray());
                     errors = sqlErrorDictionary;
                     break;
+
                 case ArgumentException:
                 case InvalidOperationException:
                     message = exception.Message;

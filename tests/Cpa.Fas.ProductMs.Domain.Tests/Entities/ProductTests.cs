@@ -14,7 +14,7 @@ public class ProductTests
         var name = "Test Product";
         var price = 10.50m;
         var stock = 100;
-        Guid userGuid = Guid.NewGuid(); // Simulating a user GUID for the creator   
+        Guid userGuid = Guid.NewGuid(); // Simulating a user GUID for the creator
         var product = Product.Create(name, price, stock, userGuid);
 
         // Assert

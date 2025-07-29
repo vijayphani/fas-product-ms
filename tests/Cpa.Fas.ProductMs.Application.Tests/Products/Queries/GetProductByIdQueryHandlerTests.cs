@@ -7,7 +7,6 @@ using Moq;
 
 namespace Cpa.Fas.ProductMs.Application.Tests.Products.Queries
 {
-
     public class GetProductByIdQueryHandlerTests
     {
         private readonly Mock<IProductRepository> _mockProductRepository;

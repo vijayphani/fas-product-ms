@@ -40,5 +40,4 @@ namespace Cpa.Fas.ProductMs.Application.Tests.Products.Commands
             _mockUnitOfWork.Verify(uow => uow.CommitAsync(It.IsAny<CancellationToken>()), Times.Once);
         }
     }
-
 }

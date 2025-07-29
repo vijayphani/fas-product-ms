@@ -115,7 +115,7 @@ CREATE TABLE [Products](
     }
 
     [Fact]
-    public async Task DeleteAsync_ShouldRemoveProductFromDatabase()
+    public async Task DeleteAsync_ShouldNotRemoveProductFromDatabase()
     {
         // Arrange
         var userGuid = Guid.NewGuid();
@@ -127,7 +127,9 @@ CREATE TABLE [Products](
 
         // Assert
         var deletedProduct = await _productRepository.GetByIdAsync(product.Id);
-        deletedProduct.Should().BeNull();
+        deletedProduct.Should().NotBeNull();
+        deletedProduct.IsDeleted.Should().Be(true); 
+
     }
 
     public void Dispose()

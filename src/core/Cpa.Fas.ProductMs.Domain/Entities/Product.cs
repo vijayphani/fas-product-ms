@@ -20,10 +20,20 @@ namespace Cpa.Fas.ProductMs.Domain.Entities
             Stock = stock;
         }
 
+        public Product(ProductId id, string name, decimal price, int stock, bool isDeleted)
+        {
+            Id = id;
+            Name = name;
+            Price = price;
+            Stock = stock;
+            IsDeleted = isDeleted;
+        }
+
         public ProductId Id { get; private set; } = ProductId.New(); // Initialize with a new ID
         public string Name { get; private set; } = string.Empty;
         public decimal Price { get; private set; }
         public int Stock { get; private set; }
+        public bool IsDeleted { get; private set; }  
 
         // Static factory method to create a new Product and raise a domain event.
         public static Product Create(string name, decimal price, int stock, Guid userGuid)

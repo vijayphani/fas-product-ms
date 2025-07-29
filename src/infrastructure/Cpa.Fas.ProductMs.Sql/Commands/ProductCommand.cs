@@ -44,12 +44,15 @@ WHERE
         #endregion
 
         #region Delete  
+        // We do only soft delete in this case, setting IsDeleted to 1
+
         public const string DeleteProduct = @"
-DELETE 
-FROM 
-    Products 
+UPDATE Products 
+SET 
+    IsDeleted = 1 
 WHERE 
-    Id = @Id";
+    Id = @Id
+";
         #endregion
 
     }

@@ -7,12 +7,12 @@ namespace Cpa.Fas.ProductMs.Application.Products.Commands.CreateProduct
 {
     public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, Guid>
     {
-        private readonly IProductRepository _productRepository;
+        private readonly ICommandProductRepository _commandProductRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public CreateProductCommandHandler(IProductRepository productRepository, IUnitOfWork unitOfWork)
+        public CreateProductCommandHandler(ICommandProductRepository commandProductRepository, IUnitOfWork unitOfWork)
         {
-            _productRepository = productRepository;
+            _commandProductRepository = commandProductRepository;
             _unitOfWork = unitOfWork;
         }
 
@@ -20,7 +20,7 @@ namespace Cpa.Fas.ProductMs.Application.Products.Commands.CreateProduct
         {
             var product = Product.Create(request.Name, request.Price, request.Stock, request.userGuid);
 
-            await _productRepository.AddAsync(product);
+            await _commandProductRepository.AddAsync(product);
             _unitOfWork.AddEntityWithEvents(product);
             await _unitOfWork.CommitAsync(cancellationToken); // This will also dispatch domain events
 

@@ -9,13 +9,13 @@ namespace Cpa.Fas.ProductMs.Application.Tests.Products.Queries
 {
     public class GetProductByIdQueryHandlerTests
     {
-        private readonly Mock<IProductRepository> _mockProductRepository;
+        private readonly Mock<IQueryProductRepository> _mockQueryProductRepository;
         private readonly GetProductByIdQueryHandler _handler;
 
         public GetProductByIdQueryHandlerTests()
         {
-            _mockProductRepository = new Mock<IProductRepository>();
-            _handler = new GetProductByIdQueryHandler(_mockProductRepository.Object);
+            _mockQueryProductRepository = new Mock<IQueryProductRepository>();
+            _handler = new GetProductByIdQueryHandler(_mockQueryProductRepository.Object);
         }
 
         [Fact]
@@ -29,7 +29,7 @@ namespace Cpa.Fas.ProductMs.Application.Tests.Products.Queries
 
             var product = new Product(productId, productName, productPrice, productStock);
 
-            _mockProductRepository.Setup(repo => repo.GetByIdAsync(productId))
+            _mockQueryProductRepository.Setup(repo => repo.GetByIdAsync(productId))
                 .ReturnsAsync(product);
 
             var query = new GetProductByIdQuery(productId.Value);
@@ -44,7 +44,7 @@ namespace Cpa.Fas.ProductMs.Application.Tests.Products.Queries
             result.Price.Should().Be(productPrice);
             result.Stock.Should().Be(productStock);
 
-            _mockProductRepository.Verify(repo => repo.GetByIdAsync(productId), Times.Once);
+            _mockQueryProductRepository.Verify(repo => repo.GetByIdAsync(productId), Times.Once);
         }
 
         [Fact]
@@ -52,7 +52,7 @@ namespace Cpa.Fas.ProductMs.Application.Tests.Products.Queries
         {
             // Arrange
             var productId = ProductId.New();
-            _mockProductRepository.Setup(repo => repo.GetByIdAsync(productId))
+            _mockQueryProductRepository.Setup(repo => repo.GetByIdAsync(productId))
                 .ReturnsAsync((Product?)null); // Simulate product not found
 
             var query = new GetProductByIdQuery(productId.Value);
@@ -62,7 +62,7 @@ namespace Cpa.Fas.ProductMs.Application.Tests.Products.Queries
 
             // Assert
             result.Should().BeNull();
-            _mockProductRepository.Verify(repo => repo.GetByIdAsync(productId), Times.Once);
+            _mockQueryProductRepository.Verify(repo => repo.GetByIdAsync(productId), Times.Once);
         }
     }
 }

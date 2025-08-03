@@ -1,45 +1,35 @@
-﻿using Cpa.Fas.ProductMs.Domain.Entities;
+using Cpa.Fas.ProductMs.Domain.Entities;
 using Cpa.Fas.ProductMs.Domain.Repositories;
 using Cpa.Fas.ProductMs.Domain.ValueObjects;
-using Cpa.Fas.ProductMs.Infrastructure.Persistence.DapperModels;
 using Cpa.Fas.ProductMs.Sql.Commands;
-using Cpa.Fas.ProductMs.Sql.Queries;
 using Dapper;
 using System.Data;
 
 namespace Cpa.Fas.ProductMs.Infrastructure.Persistence.Repositories
 {
-    public class ProductRepository : IProductRepository
+    public class CommandProductRepository : ICommandProductRepository
     {
-        private readonly IDbConnection _connection;
+        private readonly IDbConnection _commandConnection;
         private readonly IDbTransaction _transaction;
 
-        // The UnitOfWork instance is implicitly passed via the constructor
-        // to ensure all operations use the same connection and transaction.
-        public ProductRepository(IDbConnection connection, IDbTransaction transaction)
+        public CommandProductRepository(
+            CommandConnection commandConnection,
+            IDbTransaction transaction)
         {
-            _connection = connection;
+            _commandConnection = commandConnection.Connection;
             _transaction = transaction;
         }
 
-        public async Task<Product?> GetByIdAsync(ProductId id)
+        public CommandProductRepository(IDbConnection connection, IDbTransaction transaction)
         {
-            var sql = ProductQuery.GetProductById;
-            var productModel = await _connection.QuerySingleOrDefaultAsync<ProductModel>(sql, new { Id = id.Value }, _transaction);
-
-            if (productModel == null)
-            {
-                return null;
-            }
-
-            // Reconstruct domain entity from Dapper model
-            return new Product(ProductId.FromGuid(productModel.Id), productModel.Name, productModel.Price, productModel.Stock, productModel.IsDeleted);
+            _commandConnection = connection;
+            _transaction = transaction;
         }
 
         public async Task AddAsync(Product product)
         {
             var sql = ProductCommand.AddProduct;
-            await _connection.ExecuteAsync(sql, new
+            await _commandConnection.ExecuteAsync(sql, new
             {
                 Id = product.Id.Value,
                 product.Name,
@@ -55,7 +45,7 @@ namespace Cpa.Fas.ProductMs.Infrastructure.Persistence.Repositories
         public async Task UpdateAsync(Product product)
         {
             var sql = ProductCommand.UpdateProduct;
-            await _connection.ExecuteAsync(sql, new
+            await _commandConnection.ExecuteAsync(sql, new
             {
                 product.Name,
                 product.Price,
@@ -69,7 +59,7 @@ namespace Cpa.Fas.ProductMs.Infrastructure.Persistence.Repositories
         public async Task DeleteAsync(ProductId id)
         {
             var sql = ProductCommand.DeleteProduct;
-            await _connection.ExecuteAsync(sql, new { Id = id.Value }, _transaction);
+            await _commandConnection.ExecuteAsync(sql, new { Id = id.Value }, _transaction);
         }
     }
 }

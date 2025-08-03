@@ -11,22 +11,31 @@ using System.Data;
 
 namespace Cpa.Fas.ProductMs.Infrastructure;
 
+
 public static class ConfigureServices
 {
     public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
     {
-        // Register IDbConnection
+        // Register Command and Query connections
         services.AddScoped<IDbConnection>(sp =>
         {
-            // Use SqlConnection for SQL Server. For SQLite, use SqliteConnection.
-            var connectionString = configuration.GetConnectionString("DefaultConnection");
-            if (string.IsNullOrEmpty(connectionString))
-            {
-                throw new InvalidOperationException("DefaultConnection connection string is not configured.");
-            }
+            var connectionString = configuration.GetConnectionString("CommandConnection")
+                ?? throw new InvalidOperationException("CommandConnection string is not configured.");
             return new SqlConnection(connectionString);
-            // return new SqliteConnection(connectionString); // For SQLite
         });
+
+
+        // Query connection string
+        services.AddScoped<IDbConnection>(sp =>
+        {
+            var connectionString = configuration.GetConnectionString("QueryConnection")
+                ?? throw new InvalidOperationException("QueryConnection string is not configured.");
+            return new SqlConnection(connectionString);
+        });
+
+        // Register named connections for CQRS
+        services.AddScoped<CommandConnection>();
+        services.AddScoped<QueryConnection>();
 
         // Register UnitOfWork as scoped
         services.AddScoped<UnitOfWork>();
@@ -40,7 +49,8 @@ public static class ConfigureServices
         });
 
         // Register repositories
-        services.AddScoped<IProductRepository, ProductRepository>();
+        services.AddScoped<ICommandProductRepository, CommandProductRepository>();
+        services.AddScoped<IQueryProductRepository, QueryProductRepository>();
 
         // Register Domain Event Dispatcher
         services.AddScoped<IDomainEventDispatcher, DomainEventDispatcher>();

@@ -11,7 +11,9 @@ public class ProductRepositoryTests : IDisposable
 {
     private readonly IDbConnection _connection;
     private readonly IDbTransaction _transaction;
-    private readonly ProductRepository _productRepository;
+
+    private readonly CommandProductRepository _commandProductRepository;
+    private readonly QueryProductRepository _queryProductRepository;
 
     public ProductRepositoryTests()
     {
@@ -37,7 +39,8 @@ CREATE TABLE [Products](
 
         _connection.Execute(createTableSql, transaction: _transaction);
 
-        _productRepository = new ProductRepository(_connection, _transaction);
+        _commandProductRepository = new CommandProductRepository(_connection, _transaction);
+        _queryProductRepository = new QueryProductRepository(_connection);
     }
 
     [Fact]
@@ -48,10 +51,10 @@ CREATE TABLE [Products](
         var product = Product.Create("Test Product", 15.99m, 200, userGuid);
 
         // Act
-        await _productRepository.AddAsync(product);
+        await _commandProductRepository.AddAsync(product);
 
         // Assert
-        var retrievedProduct = await _productRepository.GetByIdAsync(product.Id);
+        var retrievedProduct = await _queryProductRepository.GetByIdAsync(product.Id);
         retrievedProduct.Should().NotBeNull();
         retrievedProduct!.Id.Should().Be(product.Id);
         retrievedProduct.Name.Should().Be(product.Name);
@@ -65,10 +68,10 @@ CREATE TABLE [Products](
         // Arrange
         var productId = ProductId.New();
         var product = new Product(productId, "Existing Product", 100.00m, 50);
-        await _productRepository.AddAsync(product); // Add product directly for setup
+        await _commandProductRepository.AddAsync(product); // Add product directly for setup
 
         // Act
-        var retrievedProduct = await _productRepository.GetByIdAsync(productId);
+        var retrievedProduct = await _queryProductRepository.GetByIdAsync(productId);
 
         // Assert
         retrievedProduct.Should().NotBeNull();
@@ -85,7 +88,7 @@ CREATE TABLE [Products](
         var nonExistentId = ProductId.New();
 
         // Act
-        var retrievedProduct = await _productRepository.GetByIdAsync(nonExistentId);
+        var retrievedProduct = await _queryProductRepository.GetByIdAsync(nonExistentId);
 
         // Assert
         retrievedProduct.Should().BeNull();
@@ -97,16 +100,16 @@ CREATE TABLE [Products](
         // Arrange
         var userGuid = Guid.NewGuid();
         var product = Product.Create("Original Product", 20.00m, 100, userGuid);
-        await _productRepository.AddAsync(product);
+        await _commandProductRepository.AddAsync(product);
 
         product.UpdateDetails("Updated Product", 25.50m);
         product.IncreaseStock(10); // Also test stock update
 
         // Act
-        await _productRepository.UpdateAsync(product);
+        await _commandProductRepository.UpdateAsync(product);
 
         // Assert
-        var updatedProduct = await _productRepository.GetByIdAsync(product.Id);
+        var updatedProduct = await _queryProductRepository.GetByIdAsync(product.Id);
         updatedProduct.Should().NotBeNull();
         updatedProduct!.Name.Should().Be("Updated Product");
         updatedProduct.Price.Should().Be(25.50m);
@@ -119,13 +122,13 @@ CREATE TABLE [Products](
         // Arrange
         var userGuid = Guid.NewGuid();
         var product = Product.Create("Product To Delete", 5.00m, 10, userGuid);
-        await _productRepository.AddAsync(product);
+        await _commandProductRepository.AddAsync(product);
 
         // Act
-        await _productRepository.DeleteAsync(product.Id);
+        await _commandProductRepository.DeleteAsync(product.Id);
 
         // Assert
-        var deletedProduct = await _productRepository.GetByIdAsync(product.Id);
+        var deletedProduct = await _queryProductRepository.GetByIdAsync(product.Id);
         deletedProduct.Should().NotBeNull();
         deletedProduct.IsDeleted.Should().Be(true);
     }

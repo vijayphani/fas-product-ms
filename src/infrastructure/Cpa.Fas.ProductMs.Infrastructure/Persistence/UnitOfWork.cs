@@ -16,9 +16,9 @@ namespace Cpa.Fas.ProductMs.Infrastructure.Persistence
         // A list to keep track of entities that have domain events
         private readonly List<BaseEntity> _entitiesWithEvents = new();
 
-        public UnitOfWork(IDbConnection connection, IPublisher publisher, IDomainEventDispatcher domainEventDispatcher)
+        public UnitOfWork(CommandConnection commandConnection, IPublisher publisher, IDomainEventDispatcher domainEventDispatcher)
         {
-            _connection = connection;
+            _connection = commandConnection.Connection;
             _publisher = publisher;
             _domainEventDispatcher = domainEventDispatcher;
 

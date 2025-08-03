@@ -9,15 +9,15 @@ namespace Cpa.Fas.ProductMs.Application.Tests.Products.Commands
 {
     public class CreateProductCommandHandlerTests
     {
-        private readonly Mock<IProductRepository> _mockProductRepository;
+        private readonly Mock<ICommandProductRepository> _mockCommandProductRepository;
         private readonly Mock<IUnitOfWork> _mockUnitOfWork;
         private readonly CreateProductCommandHandler _handler;
 
         public CreateProductCommandHandlerTests()
         {
-            _mockProductRepository = new Mock<IProductRepository>();
+            _mockCommandProductRepository = new Mock<ICommandProductRepository>();
             _mockUnitOfWork = new Mock<IUnitOfWork>();
-            _handler = new CreateProductCommandHandler(_mockProductRepository.Object, _mockUnitOfWork.Object);
+            _handler = new CreateProductCommandHandler(_mockCommandProductRepository.Object, _mockUnitOfWork.Object);
         }
 
         [Fact]
@@ -36,7 +36,7 @@ namespace Cpa.Fas.ProductMs.Application.Tests.Products.Commands
             // Assert
             result.Should().NotBeEmpty(); // Expect a new product ID (Guid)
 
-            _mockProductRepository.Verify(repo => repo.AddAsync(It.IsAny<Product>()), Times.Once);
+            _mockCommandProductRepository.Verify(repo => repo.AddAsync(It.IsAny<Product>()), Times.Once);
             _mockUnitOfWork.Verify(uow => uow.CommitAsync(It.IsAny<CancellationToken>()), Times.Once);
         }
     }

@@ -10,7 +10,7 @@ namespace Cpa.Fas.ProductMs.Architecture.Tests
     {
         protected static readonly Assembly DomainAssembly = typeof(Product).Assembly;
         protected static readonly Assembly ApplicationAssembly = typeof(ICommand).Assembly;
-        protected static readonly Assembly InfrastructureAssembly = typeof(ProductRepository).Assembly;
+        protected static readonly Assembly InfrastructureAssembly = typeof(CommandProductRepository).Assembly;
         protected static readonly Assembly PresentationAssembly = typeof(Program).Assembly;
     }
 }

@@ -6,7 +6,9 @@ namespace Cpa.Fas.ProductMs.Domain.Repositories
     public interface ICommandProductRepository
     {
         Task AddAsync(Product product);
+
         Task UpdateAsync(Product product);
-        Task DeleteAsync(ProductId id);
+
+        Task DeleteAsync(Product product);
     }
 }

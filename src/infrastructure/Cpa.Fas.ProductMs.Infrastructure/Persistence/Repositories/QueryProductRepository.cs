@@ -12,11 +12,6 @@ namespace Cpa.Fas.ProductMs.Infrastructure.Persistence.Repositories
     {
         private readonly IDbConnection _queryConnection;
 
-        public QueryProductRepository(QueryConnection queryConnection)
-        {
-            _queryConnection = queryConnection.Connection;
-        }
-
         public QueryProductRepository(IDbConnection connection)
         {
             _queryConnection = connection;

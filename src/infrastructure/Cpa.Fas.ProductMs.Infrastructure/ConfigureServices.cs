@@ -11,7 +11,6 @@ using System.Data;
 
 namespace Cpa.Fas.ProductMs.Infrastructure;
 
-
 public static class ConfigureServices
 {
     public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
@@ -23,7 +22,6 @@ public static class ConfigureServices
                 ?? throw new InvalidOperationException("CommandConnection string is not configured.");
             return new SqlConnection(connectionString);
         });
-
 
         // Query connection string
         services.AddScoped<IDbConnection>(sp =>

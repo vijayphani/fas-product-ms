@@ -54,7 +54,9 @@ WHERE
         public const string DeleteProduct = @"
 UPDATE Products
 SET
-    IsDeleted = 1
+    IsDeleted = 1,
+    UpdatedBy = @UpdatedBy,
+    UpdatedAt = @UpdatedAt
 WHERE
     Id = @Id
 ";

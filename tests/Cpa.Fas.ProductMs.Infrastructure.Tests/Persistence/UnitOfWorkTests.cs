@@ -7,7 +7,6 @@ using FluentAssertions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Moq;
-using System.Data;
 using System.Data.SQLite;
 
 namespace Cpa.Fas.ProductMs.Infrastructure.Tests.Persistence
@@ -20,6 +19,7 @@ namespace Cpa.Fas.ProductMs.Infrastructure.Tests.Persistence
         private readonly IDomainEventDispatcher _domainEventDispatcher;
         private UnitOfWork _unitOfWork;
         private readonly CommandConnection _commandConnection;
+
         public UnitOfWorkTests()
         {
             _connection = new SQLiteConnection("Data Source=:memory:;Version=3;New=True;");
@@ -124,8 +124,8 @@ namespace Cpa.Fas.ProductMs.Infrastructure.Tests.Persistence
             // TODO: Fix Clean up the in-memory database connection
             // with SQLite the connection is throwing object disposed exception
             // verify that the connection is closed and disposed
-            // _connection?.Close();
-            // _connection?.Dispose();
+            //_connection?.Close();
+            //_connection?.Dispose();
         }
     }
 }

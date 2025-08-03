@@ -12,14 +12,6 @@ namespace Cpa.Fas.ProductMs.Infrastructure.Persistence.Repositories
         private readonly IDbConnection _commandConnection;
         private readonly IDbTransaction _transaction;
 
-        public CommandProductRepository(
-            CommandConnection commandConnection,
-            IDbTransaction transaction)
-        {
-            _commandConnection = commandConnection.Connection;
-            _transaction = transaction;
-        }
-
         public CommandProductRepository(IDbConnection connection, IDbTransaction transaction)
         {
             _commandConnection = connection;
@@ -56,10 +48,15 @@ namespace Cpa.Fas.ProductMs.Infrastructure.Persistence.Repositories
             }, _transaction);
         }
 
-        public async Task DeleteAsync(ProductId id)
+        public async Task DeleteAsync(Product product)
         {
             var sql = ProductCommand.DeleteProduct;
-            await _commandConnection.ExecuteAsync(sql, new { Id = id.Value }, _transaction);
+            await _commandConnection.ExecuteAsync(sql, 
+                new { 
+                    Id = product.Id.Value,
+                     product.UpdatedBy,
+                    product.UpdatedAt,
+                }, _transaction);
         }
     }
 }

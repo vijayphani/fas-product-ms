@@ -17,6 +17,7 @@ SELECT
 FROM
     Products
 WHERE
+    IsDeleted = 0 AND
     Id = @Id
  ";
 

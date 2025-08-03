@@ -30,13 +30,14 @@ CREATE TABLE [Products](
 	[Name] [nvarchar](100) NOT NULL,
 	[Price] [decimal](18, 2) NOT NULL,
 	[Stock] [int] NOT NULL,
-	[IsDeleted] [bit] NULL,
+	[IsDeleted] DEFAULT 0,  -- Very important to set default value for IsDeleted in sql lite
 	[CreatedBy] [uniqueidentifier] NOT NULL,
 	[CreatedAt] [datetime] NOT NULL,
 	[UpdatedBy] [uniqueidentifier] NOT NULL,
 	[UpdatedAt] [datetime] NOT NULL
 );";
 
+       
         _connection.Execute(createTableSql, transaction: _transaction);
 
         _commandProductRepository = new CommandProductRepository(_connection, _transaction);
@@ -125,12 +126,13 @@ CREATE TABLE [Products](
         await _commandProductRepository.AddAsync(product);
 
         // Act
-        await _commandProductRepository.DeleteAsync(product.Id);
+        product.UpdatedAt = DateTime.UtcNow; // Set UpdatedAt for deletion
+        product.UpdatedBy = userGuid; // Set UpdatedBy for deletion
+        await _commandProductRepository.DeleteAsync(product);
 
         // Assert
         var deletedProduct = await _queryProductRepository.GetByIdAsync(product.Id);
-        deletedProduct.Should().NotBeNull();
-        deletedProduct.IsDeleted.Should().Be(true);
+        deletedProduct.Should().BeNull();
     }
 
     public void Dispose()

@@ -1,6 +1,6 @@
 ﻿using Cpa.Fas.ProductMs.Application.Common.Interfaces;
+using Cpa.Fas.ProductMs.Application.Repositories.Interfaces;
 using Cpa.Fas.ProductMs.Domain.Entities;
-using Cpa.Fas.ProductMs.Domain.Repositories;
 using MediatR;
 
 namespace Cpa.Fas.ProductMs.Application.Products.Commands.CreateProduct

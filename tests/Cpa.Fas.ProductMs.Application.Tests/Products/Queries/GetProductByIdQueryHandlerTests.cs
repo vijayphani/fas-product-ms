@@ -1,6 +1,6 @@
 ﻿using Cpa.Fas.ProductMs.Application.Products.Queries.GetProductById;
+using Cpa.Fas.ProductMs.Application.Repositories.Interfaces;
 using Cpa.Fas.ProductMs.Domain.Entities;
-using Cpa.Fas.ProductMs.Domain.Repositories;
 using Cpa.Fas.ProductMs.Domain.ValueObjects;
 using FluentAssertions;
 using Moq;

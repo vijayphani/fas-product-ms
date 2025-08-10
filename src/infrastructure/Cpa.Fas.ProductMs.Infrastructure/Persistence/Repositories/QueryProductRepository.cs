@@ -1,5 +1,5 @@
+using Cpa.Fas.ProductMs.Application.Repositories.Interfaces;
 using Cpa.Fas.ProductMs.Domain.Entities;
-using Cpa.Fas.ProductMs.Domain.Repositories;
 using Cpa.Fas.ProductMs.Domain.ValueObjects;
 using Cpa.Fas.ProductMs.Infrastructure.Persistence.DapperModels;
 using Cpa.Fas.ProductMs.Sql.Queries;

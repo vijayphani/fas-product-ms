@@ -1,6 +1,5 @@
 ﻿using NetArchTest.Rules;
-using Shouldly;
-
+using FluentAssertions;
 namespace Cpa.Fas.ProductMs.Architecture.Tests.Layers
 {
     public class LayerTests : BaseTest
@@ -13,7 +12,7 @@ namespace Cpa.Fas.ProductMs.Architecture.Tests.Layers
                 .NotHaveDependencyOn("Application")
                 .GetResult();
 
-            result.IsSuccessful.ShouldBeTrue();
+            result.IsSuccessful.Should().BeTrue();
         }
 
         [Fact]
@@ -24,7 +23,7 @@ namespace Cpa.Fas.ProductMs.Architecture.Tests.Layers
                 .NotHaveDependencyOn(InfrastructureAssembly.GetName().Name)
                 .GetResult();
 
-            result.IsSuccessful.ShouldBeTrue();
+            result.IsSuccessful.Should().BeTrue();
         }
 
         [Fact]
@@ -35,7 +34,7 @@ namespace Cpa.Fas.ProductMs.Architecture.Tests.Layers
                 .NotHaveDependencyOn(PresentationAssembly.GetName().Name)
                 .GetResult();
 
-            result.IsSuccessful.ShouldBeTrue();
+            result.IsSuccessful.Should().BeTrue();
         }
 
         [Fact]
@@ -46,7 +45,7 @@ namespace Cpa.Fas.ProductMs.Architecture.Tests.Layers
                 .NotHaveDependencyOn(InfrastructureAssembly.GetName().Name)
                 .GetResult();
 
-            result.IsSuccessful.ShouldBeTrue();
+            result.IsSuccessful.Should().BeTrue();
         }
 
         [Fact]
@@ -57,7 +56,7 @@ namespace Cpa.Fas.ProductMs.Architecture.Tests.Layers
                 .NotHaveDependencyOn(PresentationAssembly.GetName().Name)
                 .GetResult();
 
-            result.IsSuccessful.ShouldBeTrue();
+            result.IsSuccessful.Should().BeTrue();
         }
 
         [Fact]
@@ -68,7 +67,7 @@ namespace Cpa.Fas.ProductMs.Architecture.Tests.Layers
                 .NotHaveDependencyOn(PresentationAssembly.GetName().Name)
                 .GetResult();
 
-            result.IsSuccessful.ShouldBeTrue();
+            result.IsSuccessful.Should().BeTrue();
         }
     }
 }

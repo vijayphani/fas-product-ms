@@ -1,6 +1,5 @@
 using Cpa.Fas.ProductMs.Application.Repositories.Interfaces;
 using Cpa.Fas.ProductMs.Domain.Entities;
-using Cpa.Fas.ProductMs.Domain.ValueObjects;
 using Cpa.Fas.ProductMs.Sql.Commands;
 using Dapper;
 using System.Data;
@@ -51,10 +50,11 @@ namespace Cpa.Fas.ProductMs.Infrastructure.Persistence.Repositories
         public async Task DeleteAsync(Product product)
         {
             var sql = ProductCommand.DeleteProduct;
-            await _commandConnection.ExecuteAsync(sql, 
-                new { 
+            await _commandConnection.ExecuteAsync(sql,
+                new
+                {
                     Id = product.Id.Value,
-                     product.UpdatedBy,
+                    product.UpdatedBy,
                     product.UpdatedAt,
                 }, _transaction);
         }

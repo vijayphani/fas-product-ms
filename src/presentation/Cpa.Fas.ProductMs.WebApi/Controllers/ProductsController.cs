@@ -1,5 +1,4 @@
-﻿using Cpa.Fas.ProductMs.Application.Products;
-using Cpa.Fas.ProductMs.Application.Products.Commands.CreateProduct;
+﻿using Cpa.Fas.ProductMs.Application.Products.Commands.CreateProduct;
 using Cpa.Fas.ProductMs.Application.Products.Queries.GetProductById;
 using Cpa.Fas.ProductMs.WebApi.Models;
 using MediatR;
@@ -21,7 +20,7 @@ namespace Cpa.Fas.ProductMs.WebApi.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> CreateProduct([FromBody] CreateProductRequestViewModel request)
+        public async Task<IActionResult> CreateProduct([FromBody] CreateProductCommandRequest request)
         {
             var apiResponse = new ApiResponse<Guid>();
             // Todo: The userGuid should be retrieved from the authenticated user's claims or context
@@ -47,7 +46,7 @@ namespace Cpa.Fas.ProductMs.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetProductById(Guid id)
         {
-            var apiResponse = new ApiResponse<ProductDto>();
+            var apiResponse = new ApiResponse<GetProductByIdQueryResponse>();
             var query = new GetProductByIdQuery(id);
             var product = await _mediator.Send(query);
 

@@ -2,5 +2,5 @@
 
 namespace Cpa.Fas.ProductMs.Application.Products.Queries.GetProductById
 {
-    public record GetProductByIdQuery(Guid Id) : IQuery<ProductDto?>;
+    public record GetProductByIdQuery(Guid Id) : IQuery<GetProductByIdQueryResponse?>;
 }

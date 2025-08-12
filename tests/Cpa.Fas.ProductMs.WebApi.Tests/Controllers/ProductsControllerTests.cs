@@ -1,5 +1,4 @@
-﻿using Cpa.Fas.ProductMs.Application.Products;
-using Cpa.Fas.ProductMs.Application.Products.Commands.CreateProduct;
+﻿using Cpa.Fas.ProductMs.Application.Products.Commands.CreateProduct;
 using Cpa.Fas.ProductMs.Application.Products.Queries.GetProductById;
 using Cpa.Fas.ProductMs.WebApi.Controllers;
 using Cpa.Fas.ProductMs.WebApi.Models;
@@ -37,11 +36,11 @@ namespace Cpa.Fas.ProductMs.WebApi.Tests.Controllers
         [Fact]
         public async Task CreateProduct_ShouldReturnCreatedAtAction_WhenProductIsCreated()
         {
-            // Arrange  
+            // Arrange
             var userGuid = Guid.NewGuid();
             SetUserWithGuid(userGuid);
 
-            var request = new CreateProductRequestViewModel(
+            var request = new CreateProductCommandRequest(
                 Name: "Test Product",
                 Price: 10.5m,
                 Stock: 5
@@ -52,10 +51,10 @@ namespace Cpa.Fas.ProductMs.WebApi.Tests.Controllers
                 .Setup(m => m.Send(It.IsAny<CreateProductCommand>(), default))
                 .ReturnsAsync(createdProductId);
 
-            // Act  
+            // Act
             var result = await _controller.CreateProduct(request);
 
-            // Assert  
+            // Assert
             var createdAtAction = result as CreatedAtActionResult;
             createdAtAction.Should().NotBeNull();
             createdAtAction!.ActionName.Should().Be(nameof(_controller.GetProductById));
@@ -78,14 +77,14 @@ namespace Cpa.Fas.ProductMs.WebApi.Tests.Controllers
         [Fact]
         public async Task CreateProduct_ShouldUseGeneratedGuid_WhenUserGuidClaimIsMissing()
         {
-            // Arrange  
-            // No userGuid claim set  
+            // Arrange
+            // No userGuid claim set
             _controller.ControllerContext = new ControllerContext
             {
                 HttpContext = new DefaultHttpContext { User = new ClaimsPrincipal() }
             };
 
-            var request = new CreateProductRequestViewModel(
+            var request = new CreateProductCommandRequest(
                 Name: "Test Product",
                 Price: 10.5m,
                 Stock: 5
@@ -96,10 +95,10 @@ namespace Cpa.Fas.ProductMs.WebApi.Tests.Controllers
                 .Setup(m => m.Send(It.IsAny<CreateProductCommand>(), default))
                 .ReturnsAsync(createdProductId);
 
-            // Act  
+            // Act
             var result = await _controller.CreateProduct(request);
 
-            // Assert  
+            // Assert
             var createdAtAction = result as CreatedAtActionResult;
             createdAtAction.Should().NotBeNull();
 
@@ -114,27 +113,28 @@ namespace Cpa.Fas.ProductMs.WebApi.Tests.Controllers
         [Fact]
         public async Task GetProductById_ShouldReturnOk_WhenProductExists()
         {
-            // Arrange  
+            // Arrange
             var productId = Guid.NewGuid();
-            var productDto = new ProductDto(
+            var productDto = new GetProductByIdQueryResponse(
                 Id: productId,
                 Name: "Test Product",
                 Price: 10.5m,
-                Stock: 5
+                Stock: 5,
+                IsDeleted: false
             );
 
             _mediatorMock
                 .Setup(m => m.Send(It.Is<GetProductByIdQuery>(q => q.Id == productId), default))
                 .ReturnsAsync(productDto);
 
-            // Act  
+            // Act
             var result = await _controller.GetProductById(productId);
 
-            // Assert  
+            // Assert
             var okResult = result as OkObjectResult;
             okResult.Should().NotBeNull();
 
-            var apiResponse = okResult!.Value as ApiResponse<ProductDto>;
+            var apiResponse = okResult!.Value as ApiResponse<GetProductByIdQueryResponse>;
             apiResponse.Should().NotBeNull();
             apiResponse!.Success.Should().BeTrue();
             apiResponse.Result.Should().Be(productDto);
@@ -149,7 +149,7 @@ namespace Cpa.Fas.ProductMs.WebApi.Tests.Controllers
 
             _mediatorMock
                 .Setup(m => m.Send(It.Is<GetProductByIdQuery>(q => q.Id == productId), default))
-                .ReturnsAsync((ProductDto?)null);
+                .ReturnsAsync((GetProductByIdQueryResponse?)null);
 
             // Act
             var result = await _controller.GetProductById(productId);
@@ -158,7 +158,7 @@ namespace Cpa.Fas.ProductMs.WebApi.Tests.Controllers
             var notFoundResult = result as NotFoundObjectResult;
             notFoundResult.Should().NotBeNull();
 
-            var apiResponse = notFoundResult!.Value as ApiResponse<ProductDto>;
+            var apiResponse = notFoundResult!.Value as ApiResponse<GetProductByIdQueryResponse>;
             apiResponse.Should().NotBeNull();
             apiResponse!.Success.Should().BeFalse();
             apiResponse.Result.Should().BeNull();

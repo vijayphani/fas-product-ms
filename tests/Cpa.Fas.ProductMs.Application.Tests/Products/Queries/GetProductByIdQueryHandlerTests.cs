@@ -1,6 +1,5 @@
 ﻿using Cpa.Fas.ProductMs.Application.Products.Queries.GetProductById;
 using Cpa.Fas.ProductMs.Application.Repositories.Interfaces;
-using Cpa.Fas.ProductMs.Domain.Entities;
 using Cpa.Fas.ProductMs.Domain.ValueObjects;
 using FluentAssertions;
 using Moq;
@@ -27,7 +26,7 @@ namespace Cpa.Fas.ProductMs.Application.Tests.Products.Queries
             var productPrice = 25.00m;
             var productStock = 10;
 
-            var product = new Product(productId, productName, productPrice, productStock);
+            var product = new GetProductByIdQueryResponse(productId, productName, productPrice, productStock, false);
 
             _mockQueryProductRepository.Setup(repo => repo.GetByIdAsync(productId))
                 .ReturnsAsync(product);
@@ -53,7 +52,7 @@ namespace Cpa.Fas.ProductMs.Application.Tests.Products.Queries
             // Arrange
             var productId = ProductId.New();
             _mockQueryProductRepository.Setup(repo => repo.GetByIdAsync(productId))
-                .ReturnsAsync((Product?)null); // Simulate product not found
+                .ReturnsAsync((GetProductByIdQueryResponse?)null); // Simulate product not found
 
             var query = new GetProductByIdQuery(productId.Value);
 

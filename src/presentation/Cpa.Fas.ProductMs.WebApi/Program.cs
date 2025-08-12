@@ -2,7 +2,6 @@ using Cpa.Fas.ProductMs.Application;
 using Cpa.Fas.ProductMs.Infrastructure;
 using Cpa.Fas.ProductMs.WebApi.Middleware;
 using Microsoft.AspNetCore.HttpLogging;
-using Microsoft.Data.SqlClient;
 
 var builder = WebApplication.CreateBuilder(args);
 

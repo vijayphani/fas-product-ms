@@ -1,5 +1,5 @@
-﻿using Cpa.Fas.ProductMs.Application.Products;
-using Cpa.Fas.ProductMs.Application.Products.Commands.CreateProduct;
+﻿using Cpa.Fas.ProductMs.Application.Products.Commands.CreateProduct;
+using Cpa.Fas.ProductMs.Application.Products.Queries.GetProductById;
 using Cpa.Fas.ProductMs.WebApi.Models;
 using FluentAssertions;
 using Microsoft.AspNetCore.Http;
@@ -62,7 +62,7 @@ UpdatedAt TEXT NOT NULL
         {
             // Arrange
             var client = _factory.CreateClient();
-            var createRequest = new CreateProductRequestViewModel(
+            var createRequest = new CreateProductCommandRequest(
                 Name: "Integration Product",
                 Price: 99.99m,
                 Stock: 10
@@ -80,8 +80,8 @@ UpdatedAt TEXT NOT NULL
 
             var productId = createdApiResponse.Result;
 
-            // Getting SqLite Object disposed exception. 
-            // TODO: Need to fix this. 
+            // Getting SqLite Object disposed exception.
+            // TODO: Need to fix this.
 
             //// Act: Get Product By Id
             //var getResponse = await client.GetAsync($"/api/products/{productId}");
@@ -109,7 +109,7 @@ UpdatedAt TEXT NOT NULL
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
-            var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<ProductDto>>();
+            var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<GetProductByIdQueryResponse>>();
             apiResponse.Should().NotBeNull();
             apiResponse!.Success.Should().BeFalse();
             apiResponse.Result.Should().BeNull();

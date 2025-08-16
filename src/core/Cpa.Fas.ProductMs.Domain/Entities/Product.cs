@@ -4,7 +4,7 @@ using Cpa.Fas.ProductMs.Domain.ValueObjects;
 
 namespace Cpa.Fas.ProductMs.Domain.Entities
 {
-    public class Product : BaseAuditableEntity, IAggregateRoot
+    public sealed class Product : BaseAuditableEntity, IAggregateRoot
     {
         // Private constructor for EF Core or Dapper deserialization
         // and to enforce creation through a factory method or static method.

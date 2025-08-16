@@ -1,4 +1,5 @@
 ﻿using Cpa.Fas.ProductMs.Application.Repositories.Interfaces;
+using Cpa.Fas.ProductMs.Domain.Exceptions;
 using Cpa.Fas.ProductMs.Domain.ValueObjects;
 using MediatR;
 
@@ -20,7 +21,7 @@ namespace Cpa.Fas.ProductMs.Application.Products.Queries.GetProductById
 
             if (product == null)
             {
-                return null;
+                throw new ProductNotFoundException(productId);
             }
             return new GetProductByIdQueryResponse(product.Id, product.Name, product.Price, product.Stock, product.IsDeleted);
         }

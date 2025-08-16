@@ -1,5 +1,6 @@
 ﻿using Cpa.Fas.ProductMs.Application.Products.Queries.GetProductById;
 using Cpa.Fas.ProductMs.Application.Repositories.Interfaces;
+using Cpa.Fas.ProductMs.Domain.Exceptions;
 using Cpa.Fas.ProductMs.Domain.ValueObjects;
 using FluentAssertions;
 using Moq;
@@ -47,7 +48,7 @@ namespace Cpa.Fas.ProductMs.Application.Tests.Products.Queries
         }
 
         [Fact]
-        public async Task Handle_ShouldReturnNull_WhenProductDoesNotExist()
+        public async Task Handle_ShouldThrowProductNotFoundException_WhenProductDoesNotExist()
         {
             // Arrange
             var productId = ProductId.New();
@@ -57,10 +58,11 @@ namespace Cpa.Fas.ProductMs.Application.Tests.Products.Queries
             var query = new GetProductByIdQuery(productId.Value);
 
             // Act
-            var result = await _handler.Handle(query, CancellationToken.None);
+            Func<Task> act = async () => await _handler.Handle(query, CancellationToken.None);
 
             // Assert
-            result.Should().BeNull();
+            await act.Should().ThrowAsync<ProductNotFoundException>()
+                .WithMessage($"The product with the identifier {productId.Value} was not found.");
             _mockQueryProductRepository.Verify(repo => repo.GetByIdAsync(productId), Times.Once);
         }
     }

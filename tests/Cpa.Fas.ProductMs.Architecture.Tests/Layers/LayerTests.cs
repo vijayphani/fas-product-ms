@@ -69,5 +69,33 @@ namespace Cpa.Fas.ProductMs.Architecture.Tests.Layers
 
             result.IsSuccessful.Should().BeTrue();
         }
+
+        [Fact]
+        public void Entities_Should_Be_Sealed()
+        {
+            // Check that all classes in the "Entities" namespace are sealed
+            var result = Types.InAssembly(DomainAssembly)
+                              .That()
+                              .ResideInNamespace("Cpa.Fas.ProductMs.Domain.Entities")
+                              .Should()
+                              .BeSealed()
+                              .GetResult();
+
+            Assert.True(result.IsSuccessful, "All Entity classes should be sealed.");
+        }
+
+        [Fact]
+        public void Events_Should_Be_Sealed()
+        {
+            // Check that all classes in the "Events" namespace are sealed
+            var result = Types.InAssembly(DomainAssembly)
+                              .That()
+                              .ResideInNamespace("Cpa.Fas.ProductMs.Domain.Events")
+                              .Should()
+                              .BeSealed()
+                              .GetResult();
+
+            Assert.True(result.IsSuccessful, "All Event classes should be sealed.");
+        }
     }
 }

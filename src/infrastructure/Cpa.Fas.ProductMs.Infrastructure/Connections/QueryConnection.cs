@@ -1,12 +1,12 @@
 ﻿using System.Data;
 
-namespace Cpa.Fas.ProductMs.Infrastructure;
+namespace Cpa.Fas.ProductMs.Infrastructure.Connections;
 
-public class CommandConnection : IDisposable
+public class QueryConnection : IDisposable
 {
     public IDbConnection Connection { get; }
 
-    public CommandConnection(IDbConnection connection)
+    public QueryConnection(IDbConnection connection)
     {
         Connection = connection;
     }

@@ -1,6 +1,7 @@
 ﻿using Cpa.Fas.ProductMs.Application.Common.Interfaces;
 using Cpa.Fas.ProductMs.Domain.Common;
 using Cpa.Fas.ProductMs.Domain.Common.Intefaces;
+using Cpa.Fas.ProductMs.Infrastructure.Connections;
 using MediatR;
 using System.Data;
 
@@ -10,16 +11,14 @@ namespace Cpa.Fas.ProductMs.Infrastructure.Persistence
     {
         private readonly IDbConnection _connection;
         private IDbTransaction? _transaction;
-        private readonly IPublisher _publisher;
         private readonly IDomainEventDispatcher _domainEventDispatcher;
 
         // A list to keep track of entities that have domain events
         private readonly List<BaseEntity> _entitiesWithEvents = new();
 
-        public UnitOfWork(CommandConnection commandConnection, IPublisher publisher, IDomainEventDispatcher domainEventDispatcher)
+        public UnitOfWork(CommandConnection commandConnection,  IDomainEventDispatcher domainEventDispatcher)
         {
             _connection = commandConnection.Connection;
-            _publisher = publisher;
             _domainEventDispatcher = domainEventDispatcher;
 
             // Open connection if not already open

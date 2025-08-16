@@ -1,6 +1,7 @@
 ﻿using Cpa.Fas.ProductMs.Domain.Common;
 using Cpa.Fas.ProductMs.Domain.Common.Intefaces;
 using Cpa.Fas.ProductMs.Domain.Entities;
+using Cpa.Fas.ProductMs.Infrastructure.Connections;
 using Cpa.Fas.ProductMs.Infrastructure.Persistence;
 using Dapper;
 using FluentAssertions;
@@ -35,7 +36,7 @@ namespace Cpa.Fas.ProductMs.Infrastructure.Tests.Persistence
 
             _commandConnection = new CommandConnection(_connection); // Assuming CommandConnection is a wrapper around IDbConnection
 
-            _unitOfWork = new UnitOfWork(_commandConnection, _mockPublisher.Object, _domainEventDispatcher);
+            _unitOfWork = new UnitOfWork(_commandConnection, _domainEventDispatcher);
         }
 
         [Fact]

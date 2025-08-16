@@ -22,7 +22,7 @@ namespace Cpa.Fas.ProductMs.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CreateProduct([FromBody] CreateProductCommandRequest request)
         {
-            var apiResponse = new ApiResponse<Guid>();
+            
             // Todo: The userGuid should be retrieved from the authenticated user's claims or context
             // For now, we will use a placeholder or generate a new Guid.
             // If empty we should throw an exception or handle it appropriately.
@@ -35,31 +35,28 @@ namespace Cpa.Fas.ProductMs.WebApi.Controllers
             );
 
             var productId = await _mediator.Send(command);
-            apiResponse.Result = productId;
-            apiResponse.Success = true;
-            apiResponse.Message = $"Product with name {request.Name} is created successfully.";
+            var apiResponse = new ApiResponse<Guid>
+            {
+                Result = productId,
+                Success = true,
+                Message = $"Product with name {request.Name} is created successfully."
+            };
             return CreatedAtAction(nameof(GetProductById), new { id = productId }, apiResponse);
         }
 
         [HttpGet("{id:guid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetProductById(Guid id)
         {
-            var apiResponse = new ApiResponse<GetProductByIdQueryResponse>();
             var query = new GetProductByIdQuery(id);
             var product = await _mediator.Send(query);
 
-            if (product == null)
+            var apiResponse = new ApiResponse<GetProductByIdQueryResponse>
             {
-                apiResponse.Success = false;
-                apiResponse.Message = $"Product with Id {id} is not found";
-                return NotFound(apiResponse);
-            }
-
-            apiResponse.Success = true;
-            apiResponse.Message = $"Product with Id {id} is found";
-            apiResponse.Result = product;
+                Success = true,
+                Message = $"Product with Id {id} is found",
+                Result = product
+            };
 
             return Ok(apiResponse);
         }

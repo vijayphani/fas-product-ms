@@ -1,5 +1,6 @@
 ﻿using Cpa.Fas.ProductMs.Application.Products.Commands.CreateProduct;
 using Cpa.Fas.ProductMs.Application.Products.Queries.GetProductById;
+using Cpa.Fas.ProductMs.Domain.Exceptions;
 using Cpa.Fas.ProductMs.WebApi.Controllers;
 using Cpa.Fas.ProductMs.WebApi.Models;
 using FluentAssertions;
@@ -141,28 +142,6 @@ namespace Cpa.Fas.ProductMs.WebApi.Tests.Controllers
             apiResponse.Message.Should().Contain(productId.ToString());
         }
 
-        [Fact]
-        public async Task GetProductById_ShouldReturnNotFound_WhenProductDoesNotExist()
-        {
-            // Arrange
-            var productId = Guid.NewGuid();
-
-            _mediatorMock
-                .Setup(m => m.Send(It.Is<GetProductByIdQuery>(q => q.Id == productId), default))
-                .ReturnsAsync((GetProductByIdQueryResponse?)null);
-
-            // Act
-            var result = await _controller.GetProductById(productId);
-
-            // Assert
-            var notFoundResult = result as NotFoundObjectResult;
-            notFoundResult.Should().NotBeNull();
-
-            var apiResponse = notFoundResult!.Value as ApiResponse<GetProductByIdQueryResponse>;
-            apiResponse.Should().NotBeNull();
-            apiResponse!.Success.Should().BeFalse();
-            apiResponse.Result.Should().BeNull();
-            apiResponse.Message.Should().Contain(productId.ToString());
-        }
+       
     }
 }

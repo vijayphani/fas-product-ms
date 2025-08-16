@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Cpa.Fas.ProductMs.Domain.Events
 {
-    public class ProductCreatedDomainEvent : BaseDomainEvent, INotification
+    public sealed class ProductCreatedDomainEvent : BaseDomainEvent, INotification
     {
         public ProductCreatedDomainEvent(ProductId productId, string productName, decimal price, int stock)
         {
